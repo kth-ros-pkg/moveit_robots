@@ -1,17 +1,17 @@
 # Optimization Task
 num_feature_basis_functions: 1
-trajectory_duration: 10.0
-num_time_steps: 30
+trajectory_duration: 8.0
+num_time_steps: 40
 publish_trajectory_markers: False
 publish_best_trajectory_marker: True
 
 
-# STOMP 
+# STOMP
 max_iterations: 10
 max_iterations_after_collision_free: 4
 max_rollouts: 100
 min_rollouts: 30
-num_rollouts_per_iteration: 10
+num_rollouts_per_iteration: 20
 
 # STOMP (optional)
 use_noise_adaptation: true
@@ -28,7 +28,7 @@ noise_coefficients:
    min_stddev: [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01]
    decay:  [0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99]
 
-features: 
+features:
 - class: stomp_moveit_interface/ObstacleAvoidanceFeature
   collision_clearance: 0.02
 #- class: stomp_moveit_interface/CollisionFeature
@@ -39,9 +39,9 @@ features:
 #    size_x: 8.5 # The X dimension in meters of the volume to represent
 #    size_y: 6.0 # The Y dimension in meters of the volume to represent
 #    size_z: 4.0 # The Z dimension in meters of the volume to represent
-#    origin_x: 0.0 
-#    origin_y: 0.0 
-#    origin_z: 1.5 
-#    resolution: 0.03    
+#    origin_x: 0.0
+#    origin_y: 0.0
+#    origin_z: 1.5
+#    resolution: 0.03
 #    collision_tolerance: 0.01
 #    max_propagation_distance: 0.1
