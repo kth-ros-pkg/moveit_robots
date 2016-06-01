@@ -342,6 +342,8 @@ class JointTrajectoryControllerNode():
                 for ac in self.joint_trajectory_actions:
                     joint_positions = ac.get_joint_positions(self.joint_names, joint_positions)
                 joint_state_msg.position = joint_positions
+                joint_state_msg.velocity = [0] * len(self.joint_names)
+                joint_state_msg.effort = [0] * len(self.joint_names)
                 self.joint_state_pub.publish(joint_state_msg)
 
         except Exception as e:
