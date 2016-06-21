@@ -102,11 +102,6 @@ class JointTrajectoryActionServer():
 
 
     def _set_control_mode(self, req):
-        if req.mode == 'position' or req.mode == 'position_w_id':
-            self._mode = req.mode
-            rospy.loginfo('Joint trajectory action server for the %s arm has switched to %s mode' % (self._name, self._mode))
-        else:
-            rospy.logwarn('Joint trajectory action server for the %s arm received an invalid mode: %s' % (self._name, req.mode))
         return ControlModeResponse()
 
 
