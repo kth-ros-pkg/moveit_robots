@@ -43,6 +43,8 @@ from control_msgs.msg import FollowJointTrajectoryAction
 from control_msgs.msg import FollowJointTrajectoryResult
 from trajectory_msgs.msg import JointTrajectoryPoint
 
+from baxter_interface.srv import ControlMode, ControlModeResponse
+
 
 """
 This fake_joint_trajectory action server enable MoveIt! to execute planned path without running gazebo or robot contorller for real robot.
@@ -61,6 +63,16 @@ class JointTrajectoryActionServer():
         # start action server
         self._as = actionlib.ActionServer(joint_namespace+'/follow_joint_trajectory', FollowJointTrajectoryAction, self.trajectory_callback, auto_start = False)
         self._as.start()
+
+        # mode service
+        arm = ''
+        if joint_namespace.rfind('left') > 0:
+            arm = 'left'
+
+        else:
+            arm = 'right'
+
+        self._modeService = rospy.Service('/apc/hacks/set_control_mode_' + arm, ControlMode, self._set_control_mode)
 
         num_joints = len(joint_names)
         self.joint_names = joint_names
@@ -89,6 +101,13 @@ class JointTrajectoryActionServer():
         self.motion_thread.start()
 
 
+    def _set_control_mode(self, req):
+        if req.mode == 'position' or req.mode == 'position_w_id':
+            self._mode = req.mode
+            rospy.loginfo('Joint trajectory action server for the %s arm has switched to %s mode' % (self._name, self._mode))
+        else:
+            rospy.logwarn('Joint trajectory action server for the %s arm received an invalid mode: %s' % (self._name, req.mode))
+        return ControlModeResponse()
 
 
     """
